@@ -1,22 +1,26 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import Unocss from 'unocss/vite' // 必须导入这个
 import { resolve } from 'path'
 
 export default defineConfig({
-  // 1. 这里配置了你的子路径
+  // 1. 你的仓库名路径
   base: '/watermark/',
   
-  // 2. Vue 插件
-  plugins: [vue()],
+  // 2. 插件配置（必须包含 Unocss，否则报错）
+  plugins: [
+    vue(),
+    Unocss() 
+  ],
   
-  // 3. 路径别名配置 (解决 @ 指向 src 的问题)
+  // 3. 路径别名
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
     },
   },
   
-  // 4. 强制指定输出目录为 dist (防止项目默认改名)
+  // 4. 强制输出到 dist 目录
   build: {
     outDir: 'dist',
   }
