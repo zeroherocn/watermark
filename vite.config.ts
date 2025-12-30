@@ -1,41 +1,23 @@
 import { defineConfig } from 'vite'
-import Vue from '@vitejs/plugin-vue'
-import Components from 'unplugin-vue-components/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import UnoCSS from 'unocss/vite'
-import VueMacros from 'unplugin-vue-macros/vite'
-import path from 'node:path'
+import vue from '@vitejs/plugin-vue'
+import { resolve } from 'path'
 
 export default defineConfig({
-  base: "/watermark/",
+  // 1. 这里配置了你的子路径
+  base: '/watermark/',
+  
+  // 2. Vue 插件
+  plugins: [vue()],
+  
+  // 3. 路径别名配置 (解决 @ 指向 src 的问题)
   resolve: {
     alias: {
-      '~/': `${path.resolve(__dirname, 'src')}/`,
+      '@': resolve(__dirname, 'src'),
     },
   },
-  plugins: [
-    VueMacros({
-      plugins: {
-        vue: Vue({
-          reactivityTransform: true,
-        }),
-      },
-    }),
-    AutoImport({
-      imports: [
-        'vue',
-        '@vueuse/core',
-        'vue/macros',
-      ],
-      dts: true,
-      dirs: [
-        './src/composables',
-      ],
-      vueTemplate: true,
-    }),
-    Components({
-      dts: true,
-    }),
-    UnoCSS()
-  ]
+  
+  // 4. 强制指定输出目录为 dist (防止项目默认改名)
+  build: {
+    outDir: 'dist',
+  }
 })
