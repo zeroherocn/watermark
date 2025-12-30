@@ -7,7 +7,7 @@ import VueMacros from 'unplugin-vue-macros/vite'
 import path from 'node:path'
 
 export default defineConfig({
-  base: "./",
+  base: "/watermark/",
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
